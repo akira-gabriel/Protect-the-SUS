@@ -10,11 +10,14 @@ driver.get("https://datasus.saude.gov.br/acesso-a-informacao/morbidade-hospitala
 
 time.sleep(2)
 
-def select_option(i=0):
+def csv_download():
 
+    i = 0
+    j = 0
     wait = WebDriverWait(driver, 10)
     radios = wait.until(EC.presence_of_all_elements_located((By.NAME, "radiobutton")))
     radios[i].click()
+
     time.sleep(3)
 
     select_element = driver.find_element(By.ID, "mySelect")
@@ -22,12 +25,20 @@ def select_option(i=0):
     options[1].click()
     
 
-    select_element = WebDriverWait(driver, 10).until(
+    select_linha = WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.ID, "L"))
     )
+    select_linha = Select(select_linha)
 
-    options = select_element.find_elements(By.TAG_NAME, "option")
+    linha_option = [option for option in select_linha.options]
+    linha_list = [opt.get_attribute("value") for opt in linha_option]    
+    
+    select_element = linha_list[1]
 
-    options[1].click()
+    time.sleep(3)
+    
+    select_linha.select_by_value(select_element)
 
-select_option()
+    time.sleep(3)
+
+csv_download()
