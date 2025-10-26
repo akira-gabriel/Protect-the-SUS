@@ -12,8 +12,6 @@ time.sleep(2)
 
 def csv_download():
 
-    i = 0
-    j = 0
     wait = WebDriverWait(driver, 10)
     radios = wait.until(EC.presence_of_all_elements_located((By.NAME, "radiobutton")))
     radios[i].click()
